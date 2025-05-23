@@ -9,8 +9,6 @@ FROM isaac-lab-base${DOCKER_NAME_SUFFIX} AS ros2
 # Which ROS2 apt package to install
 ARG ROS2_APT_PACKAGE
 
-ARG USER_WORKSPACE
-
 # ROS2 Humble Apt installations
 RUN --mount=type=cache,target=/var/cache/apt \
     apt-get update && apt-get install -y --no-install-recommends \
@@ -34,9 +32,23 @@ RUN --mount=type=cache,target=/var/cache/apt \
     apt -y autoremove && apt clean autoclean && \
     rm -rf /var/lib/apt/lists/* && \
     # Add sourcing of setup.bash to .bashrc
-    echo "source /opt/ros/humble/setup.bash" >> ${HOME}/.bashrc && \
+    echo "source /opt/ros/humble/setup.bash" >> ${HOME}/.bashrc
+    
+RUN --mount=type=cache,target=/var/cache/apt \
+    # Install the aiworker environment
+    apt-get update && apt-get install -y --no-install-recommends \
+    ros-humble-xacro && \
     echo "export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp" >> ${HOME}/.bashrc && \
     echo "export ROS_DOMAIN_ID=13" >> ${HOME}/.bashrc
+
+ENV COLCON_WS=/root/colcon_ws
+WORKDIR ${COLCON_WS}
+
+RUN mkdir -p ${COLCON_WS}/src && \
+    cd ${COLCON_WS}/src && \
+    git clone -b feature-humble-isaac https://github.com/kimtaehyeong99/open_manipulator.git
+
+# RUN bash -c "colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release"
 
 # Copy the RMW specifications for ROS2
 # https://docs.isaacsim.omniverse.nvidia.com/latest/installation/install_ros.html
