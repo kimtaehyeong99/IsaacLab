@@ -108,6 +108,18 @@ class ContainerInterface:
         result = subprocess.run(["docker", "image", "inspect", self.image_name], capture_output=True, text=True)
         return result.returncode == 0
 
+    def load_env_file(self, filename: str) -> dict[str, str]:
+        """Load environment variables from a .env file."""
+        env_vars = {}
+        filepath = self.context_dir / filename
+        if filepath.exists():
+            with open(filepath, "r") as f:
+                for line in f:
+                    if line.strip() and not line.startswith("#") and "=" in line:
+                        key, value = line.strip().split("=", 1)
+                        env_vars[key] = value
+        return env_vars
+
     def start(self):
         """Build and start the Docker container using the Docker compose command."""
         print(
@@ -115,22 +127,32 @@ class ContainerInterface:
             " background...\n"
         )
 
-        # build the image for the base profile if not running base (up will build base already if profile is base)
         if self.profile != "base":
+            # 1. Load .env.base
+            merged_env = self.load_env_file(".env.base")
+
+            # 2. If profile is aiworker, load and merge .env.aiworker
+            if self.profile == "aiworker":
+                merged_env.update(self.load_env_file(".env.aiworker"))
+
+            # 3. Merge with current environment
+            merged_env = {**os.environ, **merged_env}
+
+            # 4. Add suffix as required by existing logic
+            merged_env["DOCKER_NAME_SUFFIX"] = self.suffix
+
             subprocess.run(
                 [
                     "docker",
                     "compose",
                     "--file",
                     "docker-compose.yaml",
-                    "--env-file",
-                    ".env.base",
                     "build",
                     "isaac-lab-base",
                 ],
                 check=False,
                 cwd=self.context_dir,
-                env=self.environ,
+                env=merged_env,
             )
 
         # build the image for the profile
@@ -139,7 +161,7 @@ class ContainerInterface:
             + self.add_yamls
             + self.add_profiles
             + self.add_env_files
-            + ["up", "--detach", "--build", "--remove-orphans"],
+            + ["up", "--detach", "--build"],
             check=False,
             cwd=self.context_dir,
             env=self.environ,
