@@ -41,7 +41,7 @@ RUN --mount=type=cache,target=/var/cache/apt \
     echo "export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp" >> ${HOME}/.bashrc && \
     echo "export ROS_DOMAIN_ID=13" >> ${HOME}/.bashrc
 
-ENV COLCON_WS=/root/colcon_ws
+ENV COLCON_WS=${DOCKER_ISAACLAB_PATH}/colcon_ws
 WORKDIR ${COLCON_WS}
 
 RUN mkdir -p ${COLCON_WS}/src && \
