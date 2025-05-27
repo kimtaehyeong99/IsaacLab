@@ -22,10 +22,15 @@ from isaaclab.utils.assets import ISAACLAB_NUCLEUS_DIR
 # Configuration
 ##
 
+usd_path = os.path.join(
+    os.path.dirname(__file__),
+    "../aiworker_usd/open_manipulator_y.usd"
+)
+usd_path = os.path.abspath(usd_path)
 
 OMY_CFG = ArticulationCfg(
     spawn=sim_utils.UsdFileCfg(
-        usd_path=os.environ['HOME'] + "/IsaacLab/source/isaaclab_tasks/isaaclab_tasks/manager_based/manipulation/reach/config/omy/open_manipulator_y.usd",
+        usd_path=usd_path,
         rigid_props=sim_utils.RigidBodyPropertiesCfg(
             disable_gravity=False,
             max_depenetration_velocity=5.0,

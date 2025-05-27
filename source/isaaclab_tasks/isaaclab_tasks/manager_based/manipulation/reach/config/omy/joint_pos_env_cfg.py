@@ -13,7 +13,7 @@ from isaaclab_tasks.manager_based.manipulation.reach.reach_env_cfg import ReachE
 ##
 # Pre-defined configs
 ##
-from isaaclab_tasks.manager_based.manipulation.reach.config.omy.omy_quad import OMY_CFG  # isort: skip
+from isaaclab_assets import OMY_CFG  # isort: skip
 
 
 ##
