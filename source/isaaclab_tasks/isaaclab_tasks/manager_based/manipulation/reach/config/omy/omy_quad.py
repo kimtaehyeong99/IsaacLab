@@ -35,11 +35,11 @@ OMY_CFG = ArticulationCfg(
     init_state=ArticulationCfg.InitialStateCfg(
         joint_pos={
             "joint1": 0.0,
-            "joint2": 0.0,
-            "joint3": 0.0,
+            "joint2": 1.62,
+            "joint3": -1.14,
             "joint4": 0.0,
-            "joint5": 0.0,
-            "joint6": 0.0,
+            "joint5": 2.67,
+            "joint6": -1.54,
             "rh_l1": 0.0,
             "rh_l2": 0.0,
             "rh_r1_joint": 0.0,

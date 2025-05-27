@@ -32,16 +32,16 @@ class OMYReachEnvCfg(ReachEnvCfg):
         # override events
         self.events.reset_robot_joints.params["position_range"] = (0.75, 1.25)
         # override rewards
-        self.rewards.end_effector_position_tracking.params["asset_cfg"].body_names = ["link6"]
-        self.rewards.end_effector_position_tracking_fine_grained.params["asset_cfg"].body_names = ["link6"]
-        self.rewards.end_effector_orientation_tracking.params["asset_cfg"].body_names = ["link6"]
+        self.rewards.end_effector_position_tracking.params["asset_cfg"].body_names = ["rh_p12_rn_r2"]
+        self.rewards.end_effector_position_tracking_fine_grained.params["asset_cfg"].body_names = ["rh_p12_rn_r2"]
+        self.rewards.end_effector_orientation_tracking.params["asset_cfg"].body_names = ["rh_p12_rn_r2"]
         # override actions
         self.actions.arm_action = mdp.JointPositionActionCfg(
             asset_name="robot", joint_names=[".*"], scale=0.5, use_default_offset=True
         )
         # override command generator body
         # end-effector is along x-direction
-        self.commands.ee_pose.body_name = "link6"
+        self.commands.ee_pose.body_name = "rh_p12_rn_r2"
         self.commands.ee_pose.ranges.pitch = (math.pi / 2, math.pi / 2)
 
 
