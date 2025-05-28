@@ -32,7 +32,7 @@ OMY_CFG = ArticulationCfg(
     spawn=sim_utils.UsdFileCfg(
         usd_path=usd_path,
         rigid_props=sim_utils.RigidBodyPropertiesCfg(
-            disable_gravity=False,
+            disable_gravity=True,
             max_depenetration_velocity=5.0,
         ),
         articulation_props=sim_utils.ArticulationRootPropertiesCfg(
