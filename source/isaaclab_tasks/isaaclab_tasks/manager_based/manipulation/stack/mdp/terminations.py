@@ -55,6 +55,8 @@ def cubes_stacked(
     stacked = torch.logical_and(h_dist_c12 - height_diff < height_threshold, stacked)
     stacked = torch.logical_and(h_dist_c23 - height_diff < height_threshold, stacked)
 
+    print("robot.data.joint_pos[:, -1], gripper_open_val.to(env.device)", robot.data.joint_pos[:, -1], gripper_open_val.to(env.device))
+    print("robot.data.joint_pos[:, -2]", robot.data.joint_pos[:, -2])
     # Check gripper positions
     stacked = torch.logical_and(
         torch.isclose(robot.data.joint_pos[:, -1], gripper_open_val.to(env.device), atol=atol, rtol=rtol), stacked
