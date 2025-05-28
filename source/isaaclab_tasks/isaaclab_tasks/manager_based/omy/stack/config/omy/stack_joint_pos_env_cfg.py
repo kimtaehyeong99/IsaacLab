@@ -13,9 +13,9 @@ from isaaclab.sim.spawners.from_files.from_files_cfg import UsdFileCfg
 from isaaclab.utils import configclass
 from isaaclab.utils.assets import ISAAC_NUCLEUS_DIR
 
-from isaaclab_tasks.manager_based.manipulation.stack import mdp
-from isaaclab_tasks.manager_based.manipulation.stack.mdp import omy_stack_events
-from isaaclab_tasks.manager_based.manipulation.stack.stack_env_cfg import StackEnvCfg
+from isaaclab_tasks.manager_based.omy.stack import mdp
+from isaaclab_tasks.manager_based.omy.stack.mdp import omy_stack_events
+from isaaclab_tasks.manager_based.omy.stack.stack_env_cfg import StackEnvCfg
 
 ##
 # Pre-defined configs
