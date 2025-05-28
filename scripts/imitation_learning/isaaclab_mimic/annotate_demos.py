@@ -57,6 +57,8 @@ import torch
 
 import isaaclab_mimic.envs  # noqa: F401
 
+import isaaclab_mimic.envs.omy_envs  # noqa: F401
+
 if args_cli.enable_pinocchio:
     import isaaclab_mimic.envs.pinocchio_envs  # noqa: F401
 

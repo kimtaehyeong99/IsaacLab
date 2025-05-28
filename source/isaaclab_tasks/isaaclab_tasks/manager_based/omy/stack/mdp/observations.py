@@ -269,9 +269,8 @@ def object_grasped(
     robot_cfg: SceneEntityCfg,
     ee_frame_cfg: SceneEntityCfg,
     object_cfg: SceneEntityCfg,
-    diff_threshold: float = 0.06,
-    gripper_open_val: torch.tensor = torch.tensor([0.04]),
-    gripper_threshold: float = 0.005,
+    diff_threshold: float = 0.3,
+    gripper_close_threshold: torch.tensor = torch.tensor([0.8]),
 ) -> torch.Tensor:
     """Check if an object is grasped by the specified robot."""
 
@@ -285,12 +284,11 @@ def object_grasped(
 
     grasped = torch.logical_and(
         pose_diff < diff_threshold,
-        torch.abs(robot.data.joint_pos[:, -1] - gripper_open_val.to(env.device)) > gripper_threshold,
+        robot.data.joint_pos[:, -1] >= gripper_close_threshold.to(env.device),
     )
     grasped = torch.logical_and(
-        grasped, torch.abs(robot.data.joint_pos[:, -2] - gripper_open_val.to(env.device)) > gripper_threshold
+        grasped, robot.data.joint_pos[:, -2] >= gripper_close_threshold.to(env.device)
     )
-
     return grasped
 
 
@@ -302,7 +300,7 @@ def object_stacked(
     xy_threshold: float = 0.05,
     height_threshold: float = 0.005,
     height_diff: float = 0.0468,
-    gripper_open_val: torch.tensor = torch.tensor([0.04]),
+    gripper_open_threshold: torch.tensor = torch.tensor([0.03]),
 ) -> torch.Tensor:
     """Check if an object is stacked by the specified robot."""
 
@@ -317,10 +315,10 @@ def object_stacked(
     stacked = torch.logical_and(xy_dist < xy_threshold, (height_dist - height_diff) < height_threshold)
 
     stacked = torch.logical_and(
-        torch.isclose(robot.data.joint_pos[:, -1], gripper_open_val.to(env.device), atol=1e-4, rtol=1e-4), stacked
+        robot.data.joint_pos[:, -1] <= gripper_open_threshold.to(env.device), stacked
     )
     stacked = torch.logical_and(
-        torch.isclose(robot.data.joint_pos[:, -2], gripper_open_val.to(env.device), atol=1e-4, rtol=1e-4), stacked
+        robot.data.joint_pos[:, -2] <= gripper_open_threshold.to(env.device), stacked
     )
 
     return stacked

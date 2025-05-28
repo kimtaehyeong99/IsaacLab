@@ -68,6 +68,8 @@ from isaaclab.envs import ManagerBasedRLMimicEnv
 
 import isaaclab_mimic.envs  # noqa: F401
 
+import isaaclab_mimic.envs.omy_envs  # noqa: F401
+
 if args_cli.enable_pinocchio:
     import isaaclab_mimic.envs.pinocchio_envs  # noqa: F401
 from isaaclab_mimic.datagen.generation import env_loop, setup_async_generation, setup_env_config
