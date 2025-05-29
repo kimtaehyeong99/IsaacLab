@@ -142,21 +142,21 @@ class OMYCubeStackEnvCfg(StackEnvCfg):
                     prim_path="{ENV_REGEX_NS}/Robot/open_manipulator_y/link6",
                     name="end_effector",
                     offset=OffsetCfg(
-                        pos=[0.0, 0.0, 0.1034],
+                        pos=[0.0, -0.248, 0.0],
                     ),
                 ),
                 FrameTransformerCfg.FrameCfg(
                     prim_path="{ENV_REGEX_NS}/Robot/open_manipulator_y/rh_p12_rn_r1",
                     name="tool_rightfinger",
                     offset=OffsetCfg(
-                        pos=(0.0, 0.0, 0.046),
+                        pos=(0.0, 0.0, 0.0),
                     ),
                 ),
                 FrameTransformerCfg.FrameCfg(
                     prim_path="{ENV_REGEX_NS}/Robot/open_manipulator_y/rh_p12_rn_l1",
                     name="tool_leftfinger",
                     offset=OffsetCfg(
-                        pos=(0.0, 0.0, 0.046),
+                        pos=(0.0, 0.0, 0.0),
                     ),
                 ),
             ],

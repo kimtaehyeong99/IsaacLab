@@ -160,9 +160,6 @@ class OMYCubeStackIKRelMimicEnv(ManagerBasedRLMimicEnv):
         signals = dict()
         subtask_terms = self.obs_buf["subtask_terms"]
 
-        print("grasp_1 signal:", subtask_terms["grasp_1"][env_ids])
-        print("grasp_2 signal:", subtask_terms["grasp_2"][env_ids])
-        print("stack_1 signal:", subtask_terms["stack_1"][env_ids])
         signals["grasp_1"] = subtask_terms["grasp_1"][env_ids]
         signals["grasp_2"] = subtask_terms["grasp_2"][env_ids]
         signals["stack_1"] = subtask_terms["stack_1"][env_ids]

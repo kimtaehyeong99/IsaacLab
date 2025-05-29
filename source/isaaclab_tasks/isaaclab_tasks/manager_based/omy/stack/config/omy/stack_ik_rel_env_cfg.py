@@ -32,5 +32,5 @@ class OMYCubeStackEnvCfg(stack_joint_pos_env_cfg.OMYCubeStackEnvCfg):
             body_name="link6",
             controller=DifferentialIKControllerCfg(command_type="pose", use_relative_mode=True, ik_method="dls"),
             scale=0.1,
-            body_offset=DifferentialInverseKinematicsActionCfg.OffsetCfg(pos=[0.0, -0.103, 0.0]),
+            body_offset=DifferentialInverseKinematicsActionCfg.OffsetCfg(pos=[0.0, 0.0, 0.0]),
         )
