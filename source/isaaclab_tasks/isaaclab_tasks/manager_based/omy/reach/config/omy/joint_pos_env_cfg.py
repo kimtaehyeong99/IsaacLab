@@ -7,8 +7,8 @@ import math
 
 from isaaclab.utils import configclass
 
-import isaaclab_tasks.manager_based.manipulation.reach.mdp as mdp
-from isaaclab_tasks.manager_based.manipulation.reach.reach_env_cfg import ReachEnvCfg
+import isaaclab_tasks.manager_based.omy.reach.mdp as mdp
+from isaaclab_tasks.manager_based.omy.reach.reach_env_cfg import ReachEnvCfg
 
 ##
 # Pre-defined configs
@@ -27,23 +27,21 @@ class OMYReachEnvCfg(ReachEnvCfg):
         # post init of parent
         super().__post_init__()
 
-        # switch robot to ur10
+        # switch robot to OMY robot
         self.scene.robot = OMY_CFG.replace(prim_path="{ENV_REGEX_NS}/Robot")
         # override events
-        self.events.reset_robot_joints.params["position_range"] = (0.75, 1.25)
+        self.events.reset_robot_joints.params["position_range"] = (1.0, 1.0)
         # override rewards
-        self.rewards.end_effector_position_tracking.params["asset_cfg"].body_names = ["rh_p12_rn_r2"]
-        self.rewards.end_effector_position_tracking_fine_grained.params["asset_cfg"].body_names = ["rh_p12_rn_r2"]
-        self.rewards.end_effector_orientation_tracking.params["asset_cfg"].body_names = ["rh_p12_rn_r2"]
+        self.rewards.end_effector_position_tracking.params["asset_cfg"].body_names = ["link6"]
+        self.rewards.end_effector_position_tracking_fine_grained.params["asset_cfg"].body_names = ["link6"]
+        self.rewards.end_effector_orientation_tracking.params["asset_cfg"].body_names = ["link6"]
         # override actions
         self.actions.arm_action = mdp.JointPositionActionCfg(
             asset_name="robot", joint_names=[".*"], scale=0.5, use_default_offset=True
         )
         # override command generator body
         # end-effector is along x-direction
-        self.commands.ee_pose.body_name = "rh_p12_rn_r2"
-        self.commands.ee_pose.ranges.pitch = (math.pi / 2, math.pi / 2)
-
+        self.commands.ee_pose.body_name = "link6"
 
 @configclass
 class OMYReachEnvCfg_PLAY(OMYReachEnvCfg):

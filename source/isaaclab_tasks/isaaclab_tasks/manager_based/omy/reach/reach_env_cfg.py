@@ -21,8 +21,8 @@ from isaaclab.utils import configclass
 from isaaclab.utils.assets import ISAAC_NUCLEUS_DIR
 from isaaclab.utils.noise import AdditiveUniformNoiseCfg as Unoise
 
-import isaaclab_tasks.manager_based.manipulation.reach.mdp as mdp
-
+import isaaclab_tasks.manager_based.omy.reach.mdp as mdp
+import math
 ##
 # Scene definition
 ##
@@ -69,15 +69,15 @@ class CommandsCfg:
     ee_pose = mdp.UniformPoseCommandCfg(
         asset_name="robot",
         body_name=MISSING,
-        resampling_time_range=(4.0, 4.0),
+        resampling_time_range=(2.0, 2.0),
         debug_vis=True,
         ranges=mdp.UniformPoseCommandCfg.Ranges(
-            pos_x=(0.35, 0.65),
+            pos_x=(0.25, 0.55),
             pos_y=(-0.2, 0.2),
-            pos_z=(0.15, 0.5),
-            roll=(0.0, 0.0),
-            pitch=MISSING,  # depends on end-effector axis
-            yaw=(-3.14, 3.14),
+            pos_z=(0.2, 0.4),
+            roll=(math.pi/2 - math.pi/8, math.pi/2 + math.pi/8),
+            pitch=(- math.pi/8, math.pi/8),
+            yaw=(math.pi/2 - math.pi/8, math.pi/2 + math.pi/8),
         ),
     )
 
@@ -133,7 +133,7 @@ class RewardsCfg:
     # task terms
     end_effector_position_tracking = RewTerm(
         func=mdp.position_command_error,
-        weight=-0.2,
+        weight=-0.25,
         params={"asset_cfg": SceneEntityCfg("robot", body_names=MISSING), "command_name": "ee_pose"},
     )
     end_effector_position_tracking_fine_grained = RewTerm(
